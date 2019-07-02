@@ -1,17 +1,14 @@
 CC = gcc
 CFLAGS = -W -Wall
+C = summer_vacation.c
+OBJECTS = summer_vacation.o
 TARGET = summer_vacation
-OBJECTS = summer_vaction.o
-
-all : $(TARGET)
-
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^
 
 clean : 
-	rm *.o summer_vacation
+	rm *.o $(TARGET)
 
 test :
-	./summer_vacation
-
+	$(CC) -c -o $(OBJECTS) $(C)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
+	./$(TARGET)
 
