@@ -215,4 +215,134 @@ int main(){
 }
 return 0;
 }
+*/
+
+/* 10818 - 최소, 최대
+#include <stdio.h>
+#include <stdint.h>
+
+int main(){
+    int size;
+    int min, max;
+    
+    scanf("%d",&size);
+
+    int array[size];
+
+    min = INT32_MAX;
+    max = INT32_MIN;
+
+    for(int i=0;i<size;i++){
+        scanf("%d",array+i);
+        if(max<array[i]) max = array[i];
+        if(min>array[i]) min = array[i];
+    }
+
+    printf("%d %d\n",min, max);
+
+    return 0;
+}
+*/
+
+/* 2562 -  최댓값
+#include <stdio.h>
+#include <stdint.h>
+
+int main(){
+    int size = 9;
+    int locator;
+    int max;
+    int array[size];
+
+    max = INT32_MIN;
+
+    for(int i=0;i<size;i++){
+        scanf("%d",array+i);
+        if(max<array[i]){
+            max = array[i];
+            locator = i;
+        }
+    }
+
+    printf("%d %d\n",max,locator+1);
+
+    return 0;
+}
+*/
+
+/* 3052 - 나머지
+#include <stdio.h>
+
+int main(){
+    int count_diff=0;
+    int array[10];
+    int remain[42]={0,};
+
+    for(int i=0;i<10;i++){
+        scanf("%d",array+i);
+        remain[array[i] %= 42]++;
+    }
+
+    for(int j=0;j<42;j++){
+        if(remain[j] != 0) count_diff++;
+    }
+
+    printf("%d\n",count_diff);
+
+    return 0;
+}
+*/
+
+/* 15596 - 정수  N개의 합
+#include <stdio.h>
+
+long long int sum(int *a,int n);
+
+int main(){
+int size;
+int a[]={0};
+
+printf("n을 입력하시오 : ");
+scanf("%d",&size);
+printf("\n");
+printf("n개의 숫자를 입력하시오 : ");
+for(int i=0;i<size;i++) scanf("%d",a+i);
+
+printf("%lld\n",sum(a,size));
+
+return 0;
+}
+
+long long int sum(int *a, int n){
+    int start, end;
+    start = 0;
+    end = n;
+    long long int result=0;
+   for(start;start<end;start++){
+       result += a[start];
+   }
+    return result;
+}
+*/
+
+/* 10872 - 팩토리얼 
+#include <stdio.h>
+
+int factorial(int n);
+
+int main(){
+    int n;
+    int result;
+    scanf("%d",&n);
+    result = factorial(n);
+    printf("%d\n",result);
+
+    return 0;
+}
+
+int factorial(int n){
+    if(n==0 || n==1) return 1;
+    return n*factorial(n-1);
+}
+*/
 
