@@ -346,6 +346,7 @@ int factorial(int n){
 }
 */
 
+/* 2447 - 별 찍기 - 10
 #include <stdio.h>
 
 char p[6562][6562];
@@ -398,4 +399,40 @@ void Star(int n,int x, int y){
     Star(n/3,x,y+(n/3));
     Star(n/3,x+(n/3),y+(n/3));
 }
+*/
+
+/* 11729 - 하노이 탑 이동 순서
+#include <stdio.h>
+
+void Hanoi(int n, char src, char aux, char dest);
+
+int main(){
+    int n;
+    int i,cnt=1;
+  
+    scanf("%d",&n);
+
+    for(i=2;i<=n;++i) cnt = 2*cnt+1;
+
+    printf("%d\n",cnt);
+
+    Hanoi(n, '1', '2', '3');
+
+    return 0;
+}
+
+void Hanoi(int n, char src, char aux, char dest){
+    if (n == 1)
+	{
+		printf("%c %c\n", src, dest);
+	}
+
+	else
+	{
+		Hanoi(n - 1, src, dest, aux);
+		printf("%c %c\n", src, dest);
+		Hanoi(n - 1, aux, src, dest);
+	}
+}
+*/
 
