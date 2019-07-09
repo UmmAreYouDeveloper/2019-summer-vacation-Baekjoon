@@ -436,3 +436,66 @@ void Hanoi(int n, char src, char aux, char dest){
 }
 */
 
+/* 1712 - 손익분기점
+#include <stdio.h>
+
+int main(){
+    long long int fix;
+    long long int variable;
+    long long int benefit;
+    long long int find;
+    long long int i;
+
+    scanf("%lld %lld %lld",&fix,&variable,&benefit);
+
+    if(variable >= benefit){
+        printf("-1\n");
+        return 0;
+    } 
+
+    find = fix / (benefit - variable) +1;
+
+    printf("%lld\n",find);
+
+    return 0;
+}
+*/
+
+/* 1193 - 분수 찾기
+#include <stdio.h>
+
+int main(){
+    int num;
+    int n;
+    int find;
+    int start, end;
+    int offset;
+
+    scanf("%d",&num);
+
+    for(n=1;;n++){
+        end = n*(n+1);
+        if(end > 2*num-2){
+            find = n;
+            break;
+        }
+    }
+
+    start = (n*(n-1)+2)/2; // 계차 수열 시작 번호 1 2 4 7 11 ....
+
+    offset = num - start;
+
+    if(n % 2 == 1) printf("%d/%d\n",n-offset,offset+1);
+    else printf("%d/%d\n",offset+1,n-offset);
+
+    return 0;
+
+}
+*/
+
+#include <stdio.h>
+
+int main(){
+
+}
+
