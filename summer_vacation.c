@@ -493,9 +493,56 @@ int main(){
 }
 */
 
+/* 2869 - 달팽이는 올라가고 싶다
 #include <stdio.h>
 
 int main(){
+    long long int up;
+    long long int down;
+    long long int length;
+    long long int count = 0;
+    
+    scanf("%lld %lld %lld",&up,&down,&length);
+    
+  
+    count = (length-down-1) / (up-down)+1;
+
+    printf("%lld\n",count);
+
+    return 0;
 
 }
+*/
+
+/* 10250 - ACM 호텔
+#include <stdio.h>
+
+int main(){
+    int testcase;
+    int h;
+    int w;
+    int count;
+    int x,y;
+   scanf("%d",&testcase);
+
+   while(testcase--){
+    scanf("%d %d %d",&h,&w,&count);
+    
+    y=count % h; // 층
+    x=count / h; // 엘베 까지 거리
+    x++;
+    if(y==0){
+        x--;
+        printf("%d%02d\n",h,x);
+
+    }else{
+    printf("%d%02d\n",y,x);
+    }
+   }
+
+   return 0;
+}
+*/
+
+
 
