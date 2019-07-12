@@ -9,6 +9,6 @@ clean :
 
 test :
 	$(CC) -c -o $(OBJECTS) $(C)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) -lm
 	./$(TARGET)
 

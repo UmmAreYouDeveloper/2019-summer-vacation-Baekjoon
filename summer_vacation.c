@@ -544,5 +544,43 @@ int main(){
 }
 */
 
+/* 1011 - Fly me to the Alpha Centauri
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+
+    int testcase;
+    int start, end;
+    long long dist;
+    long long i;
+    long long cnt;
+
+    scanf("%d", &testcase);
+ 
+    while (testcase--)
+    {
+        scanf("%d %d", &start, &end);
+ 
+        dist = end - start;
+ 
+        i=1;
+        for (;; i++)
+            if (i*i > dist)
+                break;
+        i--;
+ 
+        cnt = dist - (i * i);
+        cnt = (long long)ceil((double)cnt / (double)i);
+ 
+        printf("%lld\n", i * 2 - 1 + cnt);
+    }
+    return 0;
+}
+*/
+
+
+
+
 
 
