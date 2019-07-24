@@ -579,6 +579,63 @@ int main(){
 }
 */
 
+#include <stdio.h>
+
+int GCD(int a, int b);
+int LCM(int a, int b);
+
+int main(){
+  int tc;
+  int tmptc;
+  int M, N;
+  int x, y;
+  int cnt;
+  int tmp;
+  int solution[1000];
+  int index=0;
+  
+  scanf("%d",&tc);
+  tmptc = tc;
+  while(tc--){
+
+  scanf("%d %d %d %d",&M,&N,&x,&y);
+  
+  cnt = x % (M + 1);
+
+  for(int i=0;i<N;i++){
+      tmp = (x % N == 0) ? N : (x % N);
+      if(tmp == y) break; 
+
+      x = tmp + M;
+      cnt += M;
+  }
+
+  if(cnt > LCM(M,N)) cnt = -1;
+  
+  solution[index++] = cnt;
+
+  }
+
+  for(int j=0;j<tmptc;j++){ 
+    printf("%d\n",solution[j]);
+  }
+
+  return 0;
+}
+
+int GCD(int a, int b){
+    while(b !=0){
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int LCM(int a, int b){
+    return a*b / GCD(a,b);
+}
+
 
 
 
