@@ -579,6 +579,7 @@ int main(){
 }
 */
 
+/* 6064 - 카잉달력
 #include <stdio.h>
 
 int GCD(int a, int b);
@@ -635,7 +636,7 @@ int GCD(int a, int b){
 int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
-
+*/
 
 
 
