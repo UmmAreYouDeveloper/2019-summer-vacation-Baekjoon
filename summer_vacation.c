@@ -579,7 +579,7 @@ int main(){
 }
 */
 
-/* 6064 - 카잉달력
+/*  6064 - 카잉달력
 #include <stdio.h>
 
 int GCD(int a, int b);
@@ -637,6 +637,61 @@ int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int isPrime(int test[],int num);
+
+int main(){
+
+int num;
+int result;
+
+scanf("%d",&num);
+int test[num];
+
+for(int i=0;i<num;i++){
+    scanf("%d",test+i);
+}
+
+result = isPrime(test,num);
+
+printf("%d\n",result);
+
+return 0;
+
+}
+
+int isPrime(int test[],int num){
+    int count=0;
+    int* array;
+    array = (int*)malloc(sizeof(int*)*num);
+    int i,j;
+
+    for(i=0;i<=num;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=num;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=num;j+=i){ 
+            array[j] = 0;
+        }
+    }
+
+    for(i=2;i<num;i++){
+        for(j=0;j<num;j++){
+            if(array[i]==test[j] && array[i]!=0){
+                count++;
+        }
+    }
+    }
+
+    return count;
+}
+
+
 
 
 
