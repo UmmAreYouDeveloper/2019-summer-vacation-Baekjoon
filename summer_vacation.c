@@ -690,10 +690,3 @@ int isPrime(int test[],int num){
 
     return count;
 }
-
-
-
-
-
-
-
