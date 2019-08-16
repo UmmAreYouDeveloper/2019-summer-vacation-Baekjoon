@@ -637,7 +637,7 @@ int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
 */
-
+/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -691,6 +691,38 @@ int isPrime(int test[],int num){
     return count;
 }
 
+
+/* 1016 - 제곱 ㄴㄴ수
+#include <stdio.h>
+#include <stdbool.h>
+
+bool chk[1000001], aux[1000001];
+
+int main() {
+	long long a, b;
+	scanf("%lld %lld", &a, &b);
+	
+	int ans = b - a + 1; // 구간내의 숫자의 수
+
+	for (long long i = 2; i*i <= b; i++) {
+		if (aux[i]) continue; // 1이면 무시해라
+		for (long long j = i; j*j <= b; j += i){
+             aux[j] = 1; // 배수 체크 => 에라토스테네스의 체
+        }
+
+		for (long long j = ((a-1)/(i*i)+1)*i*i; j <= b; j += i*i){
+			if (!chk[j - a]){
+            chk[j - a] = 1;
+            ans--;
+            }
+        }
+	}
+	
+	printf("%d\n", ans);
+
+	return 0;
+}
+*/
 
 
 
