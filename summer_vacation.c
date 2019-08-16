@@ -637,7 +637,7 @@ int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
 */
-/
+/* 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -690,7 +690,7 @@ int isPrime(int test[],int num){
 
     return count;
 }
-
+*/
 
 /* 1016 - 제곱 ㄴㄴ수
 #include <stdio.h>
@@ -709,8 +709,9 @@ int main() {
 		for (long long j = i; j*j <= b; j += i){
              aux[j] = 1; // 배수 체크 => 에라토스테네스의 체
         }
-
-		for (long long j = ((a-1)/(i*i)+1)*i*i; j <= b; j += i*i){
+        // continue가 아닌놈 즉, 에라토스테네스의 체에 걸러지지 않은 놈이 밑의 루프로 내려온다.
+		for (long long j = ((a-1)/(i*i)+1)*i*i; j <= b; j += i*i){ // ((a-1)/(i*i)+1)*i*i => 구간 점프, 나누기 연산 즉, 소수의 제곱 * 배수를 통해 min이 속한 구간으로 이동했다. i는 2부터 시작하잖나
+            // 
 			if (!chk[j - a]){
             chk[j - a] = 1;
             ans--;
@@ -723,9 +724,3 @@ int main() {
 	return 0;
 }
 */
-
-
-
-
-
-
