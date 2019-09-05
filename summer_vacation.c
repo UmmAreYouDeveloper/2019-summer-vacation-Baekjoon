@@ -637,7 +637,7 @@ int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
 */
-
+/* 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -689,4 +689,558 @@ int isPrime(int test[],int num){
     }
 
     return count;
+
 }
+}
+*/
+
+/* 1016 - 제곱 ㄴㄴ수
+#include <stdio.h>
+#include <stdbool.h>
+
+bool chk[1000001], aux[1000001];
+
+int main() {
+	long long a, b;
+	scanf("%lld %lld", &a, &b);
+	
+	int ans = b - a + 1; // 구간내의 숫자의 수
+
+	for (long long i = 2; i*i <= b; i++) {
+		if (aux[i]) continue; // 1이면 무시해라
+		for (long long j = i; j*j <= b; j += i){
+             aux[j] = 1; // 배수 체크 => 에라토스테네스의 체
+        }
+        // continue가 아닌놈 즉, 에라토스테네스의 체에 걸러지지 않은 놈이 밑의 루프로 내려온다.
+		for (long long j = ((a-1)/(i*i)+1)*i*i; j <= b; j += i*i){ // ((a-1)/(i*i)+1)*i*i => 구간 점프, 나누기 연산 즉, 소수의 제곱 * 배수를 통해 min이 속한 구간으로 이동했다. i는 2부터 시작하잖나
+            // 
+			if (!chk[j - a]){
+            chk[j - a] = 1;
+            ans--;
+            }
+        }
+	}
+	
+	printf("%d\n", ans);
+
+	return 0;
+}
+*/
+
+/* 2442 별찍기 -5
+#include <stdio.h>
+
+int main(){
+    int n;
+    scanf("%d",&n);
+    for(int i = 1;i<=n;i++){
+        for(int j=n-i;j>0;j--){
+            printf(" ");
+        }
+        for(int k=0;k<2*i-1;k++){
+            printf("*");
+        }
+        printf("\n");
+    }
+    return 0;
+}
+*/
+
+/* 2751 - 수 정렬하기 2
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_INDEX 1000000
+void Quicksort(int arr[],int left,int right);
+
+int main(){
+    int arr[MAX_INDEX];
+
+    int tc;
+    scanf("%d",&tc);
+
+    for(int i=0;i<tc;i++){
+        scanf("%d",arr+i);
+    }
+
+    Quicksort(arr,0,tc-1);
+
+    for(int i=0;i<tc;i++){
+        printf("%d\n",arr[i]);
+    }
+
+    return 0;
+}
+
+void Quicksort(int arr[], int left, int right) {
+  int L = left, R = right;
+  int temp;
+  int pivot = arr[(left + right) / 2]; //피봇 위치(중앙)의 값을 받음.
+
+  //아래의 while문을 통하여 pivot 기준으로 좌, 우 크고 작은 값 나열. = Partition
+  while (L <= R) {
+
+  //pivot이 중간 값이고, 비교 대상 arr[L], arr[R]은 pivot과 비교하니 중간 지점을 넘어가면 종료로 볼 수 있음.
+    while (arr[L] < pivot) //left부터 증가하며 pivot 이상의 값을 찾음.
+      L++;
+    while (arr[R] > pivot) //right부터 감소하며 pivot 이하 값을 찾음.
+      R--;
+    //L, R 모두 최대 pivot 위치까지 이동.
+
+    if (L <= R) { //현재 L이 R이하면. (이유 : L>R 부분은 이미 정리가 된 상태임).
+      if (L != R) { //같지 않은 경우만.
+        temp = arr[L];
+        arr[L] = arr[R];
+        arr[R] = temp;
+      } //L과 R이 같다면 교환(SWAP)은 필요 없고 한 칸씩 진행만 해주면 됨.
+      L++; R--; //그리고 L,R 한 칸 더 진행.
+    }
+  }
+  if (left < R)
+    Quicksort(arr, left, R);
+  if (L < right)
+    Quicksort(arr, L, right);
+}
+*/
+
+/* 11650 좌표 정렬하기 1
+#include <stdio.h>
+
+typedef struct xy
+{
+    int x;
+    int y;
+}Map;
+ 
+Map map[100001];
+ 
+void SwapX(int a, int b) // a,b 스왑 함수 
+{
+    Map temp = map[a];
+    map[a] = map[b];
+    map[b] = temp;
+}
+ 
+int PartitionX(int left, int right)
+{
+    Map pivot = map[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.x >= map[low].x && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.x <= map[high].x && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            SwapX(low, high); //low와 high를 스왑 
+        }
+ 
+    }
+    SwapX(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+}
+ 
+void QuickSortX(int left, int right)
+{
+    if (left <= right)
+    {
+        int pivot = PartitionX(left, right); // 둘로 나누어서
+        QuickSortX(left, pivot - 1); // 왼쪽 영역을 정렬한다.
+        QuickSortX(pivot + 1, right); // 오른쪽 영역을 정렬한다.
+    }
+}
+
+void SwapY(int a, int b) // a,b 스왑 함수 
+{
+    Map temp = map[a];
+    map[a] = map[b];
+    map[b] = temp;
+}
+ 
+int PartitionY(int left, int right)
+{
+    Map pivot = map[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.y >= map[low].y && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.y <= map[high].y && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            SwapY(low, high); //low와 high를 스왑 
+        }
+ 
+    }
+    SwapY(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+ 
+}
+ 
+void QuickSortY(int left, int right)
+{
+    if (left <= right)
+    {
+        int pivot = PartitionY(left, right); // 둘로 나누어서
+        QuickSortY(left, pivot - 1); // 왼쪽 영역을 정렬한다.
+        QuickSortY(pivot + 1, right); // 오른쪽 영역을 정렬한다.
+    }
+}
+
+int main()
+{
+ 
+    int n, i;
+    int start, end;
+    int cnt = 0;
+    scanf("%d", &n);
+ 
+    for (i = 0; i < n; i++)
+        scanf("%d %d", &map[i].x, &map[i].y);
+ 
+ 
+    QuickSortX(0, n - 1);
+ 
+    i = 1;
+    start = 0;
+    end = n - 1;
+    while (i < n)
+    {
+        if (map[i].x == map[i - 1].x)
+        {
+            cnt = 1;
+            start = i - 1;
+            while (map[i].x == map[i - 1].x)
+            {
+                end = i;
+                i++;
+            }
+        }
+ 
+        if (cnt >= 1)
+        {
+            QuickSortY(start, end);
+            start = i;
+ 
+        }
+        cnt = 0;
+        i++;
+    }
+    for (i = 0; i < n; i++)
+        printf("%d %d\n", map[i].x, map[i].y);
+}
+*/
+
+/* 11651 - 좌표 정렬하기 2
+#include <stdio.h>
+
+typedef struct xy
+{
+    int x;
+    int y;
+}Map;
+ 
+Map map[100001];
+ 
+void SwapX(int a, int b) // a,b 스왑 함수 
+{
+    Map temp = map[a];
+    map[a] = map[b];
+    map[b] = temp;
+}
+ 
+int PartitionX(int left, int right)
+{
+    Map pivot = map[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.x >= map[low].x && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.x <= map[high].x && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            SwapX(low, high); //low와 high를 스왑 
+        }
+ 
+    }
+    SwapX(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+ 
+}
+
+void QuickSortX(int left, int right)
+{
+    if (left <= right)
+    {
+        int pivot = PartitionX(left, right); // 둘로 나누어서
+        QuickSortX(left, pivot - 1); // 왼쪽 영역을 정렬한다.
+        QuickSortX(pivot + 1, right); // 오른쪽 영역을 정렬한다.
+    }
+}
+
+void SwapY(int a, int b) // a,b 스왑 함수 
+{
+    Map temp = map[a];
+    map[a] = map[b];
+    map[b] = temp;
+}
+ 
+int PartitionY(int left, int right)
+{
+    Map pivot = map[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.y >= map[low].y && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.y <= map[high].y && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            SwapY(low, high); //low와 high를 스왑 
+        }
+ 
+    }
+    SwapY(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+ 
+}
+
+void QuickSortY(int left, int right)
+{
+    if (left <= right)
+    {
+        int pivot = PartitionY(left, right); // 둘로 나누어서
+        QuickSortY(left, pivot - 1); // 왼쪽 영역을 정렬한다.
+        QuickSortY(pivot + 1, right); // 오른쪽 영역을 정렬한다.
+    }
+}
+
+int main()
+{
+ 
+    int n, i;
+    int start, end;
+    int cnt = 0;
+    scanf("%d", &n);
+ 
+    for (i = 0; i < n; i++)
+        scanf("%d %d", &map[i].x, &map[i].y);
+ 
+ 
+    QuickSortY(0, n - 1);
+ 
+    i = 1;
+    start = 0;
+    end = n - 1;
+    while (i < n)
+    {
+        if (map[i].y == map[i - 1].y)
+        {
+            cnt = 1;
+            start = i - 1;
+            while (map[i].y == map[i - 1].y)
+            {
+                end = i;
+                i++;
+            }
+        }
+ 
+        if (cnt >= 1)
+        {
+            QuickSortX(start, end);
+            start = i;
+ 
+        }
+        cnt = 0;
+        i++;
+    }
+    for (i = 0; i < n; i++)
+        printf("%d %d\n", map[i].x, map[i].y);
+}
+*/
+
+/* 10814 - 나이순 정렬
+#include <stdio.h>
+
+typedef struct person{
+    int age;
+    char name[101];
+    int order;
+}people;
+
+people p[100000];
+
+void Swap(int a, int b) // a,b 스왑 함수 
+{
+    people temp = p[a];
+    p[a] = p[b];
+    p[b] = temp;
+}
+
+int PartitionAge(int left, int right)
+{
+    people pivot = p[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.age >= p[low].age && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.age <= p[high].age && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            Swap(low, high); //low와 high를 스왑 
+        }
+    }
+    Swap(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+}
+
+int PartitionOrder(int left, int right)
+{
+    people pivot = p[left]; // 피벗의 위치는 가장 왼쪽에서 시작
+    int low = left + 1;
+    int high = right;
+ 
+    while (low <= high) // 교차되기 전까지 반복한다 
+    {
+        while (pivot.order >= p[low].order && low <= right) // 피벗보다 큰 값을 찾는 과정 
+        {
+            low++; // low를 오른쪽으로 이동 
+        }
+ 
+        while (pivot.order <= p[high].order && high >= (left + 1)) // 피벗보다 작은 값을 찾는 과정 
+        {
+            high--; // high를 왼쪽으로 이동
+        }
+ 
+        if (low <= high)// 교차되지 않은 상태이면 스왑 과정 실행 
+        {
+            Swap(low, high); //low와 high를 스왑 
+        }
+    }
+    Swap(left, high); // 피벗과 high가 가리키는 대상을 교환 
+    return high;  // 옮겨진 피벗의 위치정보를 반환 
+}
+
+void QuickSortAge(int left, int right){
+    if (left <= right)
+    {
+        int pivot = PartitionAge(left, right);
+        QuickSortAge(left, pivot - 1);
+        QuickSortAge(pivot + 1, right);
+    }
+}
+
+void QuickSortOrder(int left, int right){
+    if(left<=right){
+        int pivot = PartitionOrder(left,right);
+        QuickSortOrder(left,pivot-1);
+        QuickSortOrder(pivot+1,right);
+    }
+}
+
+// 입력시에 순서도 ++ 해서 구조체에 집어넣고 좌표정렬하기 문제랑 다를게 없을듯...
+
+int main(){
+    int n;
+    scanf("%d",&n);
+
+    for(int i=0;i<n;i++){
+        scanf("%d %s",&p[i].age,p[i].name);
+        p[i].order = i;
+    }
+
+    QuickSortAge(0,n-1);
+
+    int i = 1;
+    int start = 0;
+    int end = n - 1;
+    int cnt = 0;
+
+    while (i < n)
+    {
+        if (p[i].age == p[i - 1].age)
+        {
+            cnt = 1;
+            start = i - 1;
+            while (p[i].age == p[i - 1].age)
+            {
+                end = i;
+                i++;
+            }
+        }
+ 
+        if (cnt >= 1)
+        {
+            QuickSortOrder(start, end);
+            start = i;
+ 
+        }
+        cnt = 0;
+        i++;
+    }
+
+    printf("\n");
+    for(int i=0;i<n;i++){
+        printf("%d %s\n",p[i].age,p[i].name);
+    }
+
+    return 0;
+}
+*/
+
+#include <stdio.h>
+
+int main(){
+    
+}
+
