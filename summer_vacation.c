@@ -1238,9 +1238,85 @@ int main(){
 }
 */
 
+/* 4153 - 직사각형
 #include <stdio.h>
+
+void sort(int tri[],int n);
+
+int main(){
+    int tri[3];
+    int ans[30000] ={0,};
+    int a,b,c;
+    int row = 0;
+    int t = 0;
+
+    while(1){
+        scanf("%d %d %d",tri,tri+1,tri+2);
+
+        if(tri[0]==0 && tri[1]==0 && tri[2]==0) break;
+
+        sort(tri,3);
+
+        a = tri[0];
+        b = tri[1];
+        c = tri[2];
+
+        if(c*c == a*a + b*b) ans[row] = 1;
+
+        row++;
+    }
+
+    for(int i = 0;i<row;i++){
+        if(ans[i]) printf("right\n");
+        else printf("wrong\n");
+    }
+
+    return 0;
+}
+
+void sort(int tri[],int n){
+    int tmp;
+    for(int i=0;i<n-1;i++){
+        for(int j=1;j<n;j++){
+            if(tri[i]>tri[j]){
+                tmp = tri[j];
+                tri[j] = tri[i];
+                tri[i]= tmp;
+            }
+        }
+    }
+}
+*/
+
+/* 3009 - 네 번째 점
+#include <stdio.h>
+
+typedef struct{
+    int x;
+    int y;
+}dot;
+
+dot cor[4];
 
 int main(){
     
+    int xc[1001]={0,};
+    int yc[1001]={0,};
+
+    for(int i=0;i<3;i++) {
+        scanf("%d %d",&cor[i].x,&cor[i].y);
+        xc[cor[i].x]++;
+        yc[cor[i].y]++;
+    }
+
+    for(int i=0;i<1001;i++){
+        if(xc[i]==1) cor[3].x=i;
+        if(yc[i]==1) cor[3].y=i;
+    }
+
+    printf("%d %d\n",cor[3].x,cor[3].y);
+
+    return 0;
 }
+*/
 
