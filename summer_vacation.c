@@ -637,62 +637,6 @@ int LCM(int a, int b){
     return a*b / GCD(a,b);
 }
 */
-/* 
-#include <stdio.h>
-#include <stdlib.h>
-
-int isPrime(int test[],int num);
-
-int main(){
-
-int num;
-int result;
-
-scanf("%d",&num);
-int test[num];
-
-for(int i=0;i<num;i++){
-    scanf("%d",test+i);
-}
-
-result = isPrime(test,num);
-
-printf("%d\n",result);
-
-return 0;
-
-}
-
-int isPrime(int test[],int num){
-    int count=0;
-    int* array;
-    array = (int*)malloc(sizeof(int*)*num);
-    int i,j;
-
-    for(i=0;i<=num;i++){
-        array[i]=i;
-    }
-
-    for(i=2;i*i<=num;i++){
-        if(array[i]==0) continue;
-        for(j=2*i;j<=num;j+=i){ 
-            array[j] = 0;
-        }
-    }
-
-    for(i=2;i<num;i++){
-        for(j=0;j<num;j++){
-            if(array[i]==test[j] && array[i]!=0){
-                count++;
-        }
-    }
-    }
-
-    return count;
-
-}
-}
-*/
 
 /* 1016 - 제곱 ㄴㄴ수
 #include <stdio.h>
@@ -1320,3 +1264,198 @@ int main(){
 }
 */
 
+/* 1085 - 직사각형에서 탈출
+#include <stdio.h>
+
+#define Min2(a,b) a<b ? a:b
+
+typedef struct{
+    int x;
+    int y;
+}dot;
+
+dot quad[2];
+
+int main(){
+    quad[0].x=0;
+    quad[0].y=0;
+
+    int a;
+    int b;
+    int midx;
+    int midy;
+    int minx;
+    int miny;
+    int min;
+
+    scanf("%d %d %d %d",&a,&b,&quad[1].x,&quad[1].y);
+
+    midx = quad[0].x+quad[1].x;
+    midx /= 2;
+
+    midy = quad[0].y+quad[1].y;
+    midy /= 2;
+
+    if(midx>=a) minx = a;
+    else minx = quad[1].x- a;
+
+    if(midy>=b) miny = b;
+    else miny = quad[1].y- b;
+
+    min = Min2(minx,miny);
+
+    printf("%d\n",min);
+
+    return 0;
+}
+*/
+
+/* 1978 소수 찾기
+#include <stdio.h>
+#include <stdlib.h>
+
+int isPrime(int test[],int num,int range);
+void Quicksort(int arr[], int left, int right);
+
+int main(){
+
+int num;
+int result;
+int max;
+
+scanf("%d",&num);
+int test[num];
+
+for(int i=0;i<num;i++){
+    scanf("%d",test+i);
+}
+
+Quicksort(test,0,num-1);
+
+max = test[num-1];
+
+result = isPrime(test,max,num);
+
+printf("%d\n",result);
+
+return 0;
+
+}
+
+int isPrime(int test[],int num,int range){
+    int count=0;
+    int* array;
+    array = (int*)malloc(sizeof(int*)*num);
+    int i,j;
+
+    for(i=0;i<=num;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=num;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=num;j+=i){ 
+            array[j] = 0;
+        }
+    }
+
+    for(i=2;i<=num;i++){
+        for(j=0;j<range;j++){
+            if(array[i]==test[j] && array[i]!=0){
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+void Quicksort(int arr[], int left, int right) {
+  int L = left, R = right;
+  int temp;
+  int pivot = arr[(left + right) / 2]; //피봇 위치(중앙)의 값을 받음.
+
+  //아래의 while문을 통하여 pivot 기준으로 좌, 우 크고 작은 값 나열. = Partition
+  while (L <= R) {
+
+  //pivot이 중간 값이고, 비교 대상 arr[L], arr[R]은 pivot과 비교하니 중간 지점을 넘어가면 종료로 볼 수 있음.
+    while (arr[L] < pivot) //left부터 증가하며 pivot 이상의 값을 찾음.
+      L++;
+    while (arr[R] > pivot) //right부터 감소하며 pivot 이하 값을 찾음.
+      R--;
+    //L, R 모두 최대 pivot 위치까지 이동.
+
+    if (L <= R) { //현재 L이 R이하면. (이유 : L>R 부분은 이미 정리가 된 상태임).
+      if (L != R) { //같지 않은 경우만.
+        temp = arr[L];
+        arr[L] = arr[R];
+        arr[R] = temp;
+      } //L과 R이 같다면 교환(SWAP)은 필요 없고 한 칸씩 진행만 해주면 됨.
+      L++; R--; //그리고 L,R 한 칸 더 진행.
+    }
+  }
+  if (left < R)
+    Quicksort(arr, left, R);
+  if (L < right)
+    Quicksort(arr, L, right);
+}
+*/
+// comment - 입력받으면서 max값 찾는게 더 나을거 같음..
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int* primefuc(int m,int n);
+
+int main(){
+    int m,n;
+    scanf("%d %d",&m,&n);
+
+    int* p;
+
+    p = primefuc(m,n);
+
+    for(int i=0;i<2;i++) printf("%d\n",*(p+i));
+    
+    return 0;
+}
+
+int* primefuc(int m, int n){
+    int* array;
+    int result[2];
+    int *p;
+    p = result;
+    array = (int*)malloc(sizeof(int*)*n);
+    int i,j;
+    int sum=0;
+    int min = n;
+
+    for(i=0;i<=n;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=n;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=n;j+=i){ 
+            array[j] = 0;
+        }
+    }
+    
+    for(int i=2;i<=n;i++){
+        if(array[i] != 0){ // 소수가 아니면,
+            if(array[i]<min && array[i] >= m){
+               // min값이 적어도 m보다는 커야함
+                min = array[i];
+            }
+            if(array[i] >= m){
+                sum += array[i];
+            }
+        }
+    }
+
+    // 범위내에 소수없으면 -1출력하는 기능 구현해야함..
+    result[0] = sum;
+    result[1] = min;
+
+    return p; 
+}
