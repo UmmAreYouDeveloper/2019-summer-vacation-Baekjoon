@@ -1402,34 +1402,28 @@ void Quicksort(int arr[], int left, int right) {
 */
 // comment - 입력받으면서 max값 찾는게 더 나을거 같음..
 
+/* 2581 - 소수
 #include <stdio.h>
 #include <stdlib.h>
 
-int* primefuc(int m,int n);
+void primefuc(int m,int n);
 
 int main(){
     int m,n;
     scanf("%d %d",&m,&n);
 
-    int* p;
+    primefuc(m,n);
 
-    p = primefuc(m,n);
-
-    for(int i=0;i<2;i++) printf("%d\n",*(p+i));
-    
     return 0;
 }
 
-int* primefuc(int m, int n){
+void primefuc(int m, int n){
     int* array;
-    int result[2];
-    int *p;
-    p = result;
     array = (int*)malloc(sizeof(int*)*n);
     int i,j;
     int sum=0;
     int min = n;
-
+    int cnt = 0;
     for(i=0;i<=n;i++){
         array[i]=i;
     }
@@ -1449,13 +1443,264 @@ int* primefuc(int m, int n){
             }
             if(array[i] >= m){
                 sum += array[i];
+                cnt++;
             }
         }
     }
 
-    // 범위내에 소수없으면 -1출력하는 기능 구현해야함..
-    result[0] = sum;
-    result[1] = min;
-
-    return p; 
+    if(cnt) printf("%d\n%d\n",sum,min);
+    else printf("-1\n");
 }
+*/
+
+/* 1929 - 소수구하기
+#include <stdio.h>
+#include <stdlib.h>
+
+void primefuc(int m,int n);
+
+int main(){
+    int m,n;
+    scanf("%d %d",&m,&n);
+
+    int* p;
+
+    primefuc(m,n);
+
+    return 0;
+}
+
+void primefuc(int m, int n){
+    int* array;
+   
+    array = (int*)malloc(sizeof(int*)*n);
+    int i,j;
+    int sum=0;
+    int min = n;
+
+    for(i=0;i<=n;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=n;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=n;j+=i){ 
+            array[j] = 0;
+        }
+    }
+    int t=0;
+    for(int i=2;i<=n;i++){
+        if(array[i] != 0){ // 소수일 때,
+           if(array[i] >= m){
+              printf("%d\n",array[i]);
+           }
+        }
+    }
+}
+*/
+
+/* 4948 - 베르트랑 공준
+#include <stdio.h>
+#include <stdlib.h>
+
+int primefuc(int m);
+
+int main(){
+
+    int n;
+    int result[10000];
+    int k=0;
+    do{
+        scanf("%d",&n);
+        result[k++] = primefuc(n); 
+    }while(n != 0);
+
+   for(int i=0;i<k-1;i++) printf("%d\n",result[i]);
+
+   return 0;
+}
+
+int primefuc(int m){
+    
+    int* array;
+    int n = 2*m;
+    array = (int*)malloc(sizeof(int*)*n);
+    int i,j;
+    int cnt = 0;
+    
+    for(i=0;i<=n;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=n;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=n;j+=i){ 
+            array[j] = 0;
+        }
+    }
+    
+    for(int i=2;i<=n;i++){
+        if(array[i] != 0){ // 소수일 때,
+           if(array[i] > m){
+              cnt++;
+           }
+        }
+    }
+
+    return cnt;
+}
+*/
+
+/* 9020 - 골드바흐의 추측 - 시간 초과 버전, 개선 버전 
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    int x;
+    int y;
+    int diff;
+}pr;
+
+pr p[10000];
+
+void primearr(int max);
+int cnt = 0;
+int prime[10000];
+
+int main(){
+    int tc;
+    scanf("%d",&tc);
+    int input[tc];
+    
+    int max = 0;
+    
+    for(int i=0;i<tc;i++){
+        scanf("%d",&input[i]);
+        if(max<input[i]) max=input[i];
+    }
+    
+    primearr(max); // 입력 받은 값 중 가장 큰 수 이하인 소수들이 들어간 배열만드는 함수
+
+   // 입력 받은수 - 소수 = 소수 이면 맞는 건데 제일 작은거 선택
+    int key;
+    
+   for(int i = 0;i<tc;i++){
+       int min = max;
+       for(int j=0;j<cnt;j++){
+           for(int k=0;k<cnt;k++){
+               if(input[i]-prime[j]==prime[k]){
+                   if(prime[j]>prime[k]) break;
+                    p[i].x = prime[j]; 
+                    p[i].y = prime[k];
+                    p[i].diff = prime[k] - prime[j];
+                    //printf("%d %d\n",p[i].x,p[i].y);
+                    if(min>=p[i].diff){
+                        min = p[i].diff;
+                        key=i;
+                    }
+                }
+            }
+        }
+        printf("%d %d\n",p[key].x,p[key].y);
+    }
+   
+    return 0;
+}
+
+void primearr(int max){
+    
+    int* array;
+    int n = max;
+    array = (int*)malloc(sizeof(int*)*n);
+    int i,j;
+
+    int t = 0;
+    for(i=0;i<=n;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=n;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=n;j+=i){ 
+            array[j] = 0;
+        }
+    }
+    
+    for(int i=2;i<=n;i++){
+        if(array[i] != 0){ // 소수일 때,
+                prime[t++] = array[i];
+                cnt++;
+           }
+    }
+}
+// comment ; 시간초과
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    int x;
+    int y;
+}pri;
+
+pri p[10000];
+int prime[10000]={0,};
+int cnt = 0;
+
+void isprime();
+
+int main(){
+    int tc;
+    scanf("%d",&tc);
+    int input[tc];
+    
+    for(int i=0;i<tc;i++){
+        scanf("%d",&input[i]);
+    }
+    
+   // 입력 받은수 - 소수 = 소수 이면 맞는 건데 제일 작은거 선택
+   isprime();
+
+   //for(int t=0;t<=cnt;t++) printf("%d ",prime[t]);
+   for(int i = 0;i<tc;i++){
+       int n = input[i];
+       for(int j=0;j<=n/2;j++){ // 차이가 제일 작을라면 두 수가 같은게 0 이므로 제일 작겠지..
+           if(n<j) break;
+           if(prime[j] && prime[n-j]){
+               p[i].x=j;
+               p[i].y=n-j;
+           }
+       }
+       printf("%d %d\n",p[i].x,p[i].y);
+    }
+    
+    return 0;
+}
+
+void isprime(){
+    
+    int* array;
+    int n = 10000;
+    array = (int*)malloc(sizeof(int*)*n);
+    int i,j;
+
+    int t = 0;
+    for(i=0;i<=n;i++){
+        array[i]=i;
+    }
+
+    for(i=2;i*i<=n;i++){
+        if(array[i]==0) continue;
+        for(j=2*i;j<=n;j+=i){ 
+            array[j] = 0;
+        }
+    }
+
+    for(int i=2;i<=n;i++){
+        if(array[i] != 0){ // 소수일 때,
+            prime[array[i]]++;
+            cnt++;
+        }
+    }
+}
+*/
