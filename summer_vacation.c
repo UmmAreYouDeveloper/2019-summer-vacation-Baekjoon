@@ -1704,3 +1704,14 @@ void isprime(){
     }
 }
 */
+
+#include <stdio.h>
+
+#define PI 3.141593
+
+int main(){
+    double r;
+    scanf("%lf",&r);
+    printf("%.6lf\n%.6lf\n",r*r*PI,r*r*2.0);
+    return 0;
+}
