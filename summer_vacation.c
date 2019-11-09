@@ -1749,3 +1749,485 @@ int main() {
 	return 0;
 }
 */
+
+/* 1111 - iq test
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    int num;
+    scanf("%d",&num);
+    if(num==1) {
+        printf("A\n");
+        return 0;
+    }
+    int array[num];
+    int case1,case2,case3,case4;
+    int x=1,y=0;
+    for(int i=0;i<num;i++) scanf("%d",&array[i]);
+    
+    if(array[0] != 0 && array[1] !=0 && array[2] !=0){
+        if(abs(array[2])>=abs(array[1])){
+            x= abs(array[2]) / abs(array[1]);
+            y= array[2] % array[1];
+        }else{
+            x= abs(array[2]) / abs(array[1]);
+            y= array[0] % array[1];
+        }
+        case1 = (x*array[1])+y;
+        case2 = (-x*array[1])+y;
+        case3 = (x*array[1])-y;
+        case4 = (-x*array[1])-y;
+    }else if(array[0]==0){
+        // 0 2 18 ... ex) a=8, b=array[1] // 0 2 -16 a=-9 b = array[1]
+        if(abs(array[2])>=abs(array[1])){
+            x = (abs(array[2]) - abs(array[1])) / abs(array[1]);
+            y = array[1];
+        }else{
+            x=abs(array[2]-array[1])/(array[1]);
+            y=array[1];
+        }
+        case1 = (x*array[1])+y;
+        case2 = (-x*array[1])+y;
+        case3 = (x*array[1])-y;
+        case4 = (-x*array[1])-y;
+    }else if(array[1]==0){
+        // -1 0 1 ... a=1 b=array[2] // 1 0 -1
+        x=1;
+        y=array[2];
+        case1 = (x*array[1])+y;
+        case2 = (-x*array[1])+y;
+        case3 = (x*array[1])-y;
+        case4 = (-x*array[1])-y;
+    }else if(array[2]==0){
+        // 4 2 0 // a=1 b=-array[1]
+        x=1;
+        y=-array[1];
+        case1 = (x*array[1])+y;
+        case2 = (-x*array[1])+y;
+        case3 = (x*array[1])-y;
+        case4 = (-x*array[1])-y;
+    }
+
+    printf("%d %d\n",x,y);
+
+        if(num>=3){
+            if(case1==array[2]){
+                 printf("%d\n",x*array[num-1]+y);
+            }
+            else if(case2==array[2]){
+                 printf("%d\n",(-x*array[num-1])+y);
+            }
+            else if(case3 ==array[2]) {
+                printf("%d\n",(x*array[num-1])-y);
+            }
+            else if(case4==array[2]) {
+                printf("%d\n",(-x*array[num-1])-y);
+            }else{
+                printf("B\n");
+            }
+        }else{ 
+            printf("A\n");
+        }
+    return 0;
+}
+commment - 수열 전체 검사 안 함.
+*/
+
+/* 1111 - iq test
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+ 
+    int c;
+    scanf("%d",&c);
+    int ary[c];
+    for (int i = 0; i < c; i++) scanf("%d",&ary[i]);
+ 
+    if (c == 1) {
+        printf("A\n");
+        return 0;
+    }
+    if (c == 2) {
+        if (ary[0] == ary[1]) {
+            printf("%d\n",ary[0]);
+            return 0;
+        }
+        printf("A\n");
+        return 0;
+    }
+ 
+    int a;
+    if (ary[1] == ary[0]) a = 0;
+    else a = (ary[2] - ary[1]) / (ary[1] - ary[0]);
+ 
+    int b = ary[1] - ary[0] * a;
+ 
+    for (int i = 2; i < c; i++) {
+        if ((ary[i-1] != ary[i-2]) && (a != (ary[i] - ary[i-1]) / (ary[i - 1] - ary[i - 2]))) {
+            printf("B\n");
+            return 0;
+        }
+        if (b != ary[i] - ary[i - 1] * a) {
+            printf("B\n");
+            return 0;
+        }
+    }  
+     printf("%d\n",ary[c - 1] * a + b);
+ 
+    return 0;
+}
+*/
+
+/* 7568 - 덩치
+#include <stdio.h>
+
+typedef struct human{
+    int height;
+    int weight;
+    int rank;
+}human;
+
+human h[50];
+
+int main(){
+    int tc;
+    scanf("%d",&tc);
+    for(int i=0;i<tc;i++){
+        scanf("%d %d",&h[i].height,&h[i].weight);
+        h[i].rank = 1;
+    }
+
+    for(int i=0;i<tc;i++){
+        for(int j=0;j<tc;j++){
+            if(i==j) continue;
+            if(h[i].height<h[j].height && h[i].weight < h[j].weight){
+                h[i].rank++;
+            }
+        }
+    }
+
+    for(int i=0;i<tc;i++) printf("%d ",h[i].rank);
+
+    printf("\n");
+    return 0;
+}
+*/
+
+/* 2231 - 분해합
+#include <stdio.h>
+
+int main(){
+    int n=0;
+    scanf("%d",&n);
+    int partition = 0;
+    int sum = 0;
+    // 모듈라
+    int mincon;
+    int cnt = 0;
+    for(int x=n;x>0;x--){
+        sum=x;
+        int tmp = x;
+        for(;;){
+            if(tmp==0) break;
+            partition = tmp%10;
+            sum += partition;
+            tmp/=10;
+        }
+        if(sum==n){
+            mincon = x;
+            cnt++;
+        }
+    }
+    if(cnt) {
+        printf("%d\n", mincon);
+    }else{
+        printf("0\n");
+    }
+    return 0;
+}
+*/
+/* 1436 - 영화감독 숌
+#include <stdio.h>
+
+int main(){
+    int series;
+    scanf("%d",&series);
+    int cnt=0;
+    int result=0;
+
+    for(int y=666;;y++){
+        int tmp = y;
+        int degree = 0;
+        while(tmp){
+            int checker = tmp % 10; // 연속 확인 하기
+            if(checker==6) degree++; // 맞으면 카운트 올리고
+            else if(degree < 3) degree = 0; // 아니면 카운터 초기화
+            tmp /=10;
+        }
+        if(degree >= 3) cnt++;
+        if(series==cnt) {
+            result=y;
+            break;
+        }
+    }
+    printf("%d \n",result);
+}
+*/
+
+/* 1018 - 체스판 다시 칠하기
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int compare(char *input[],int m, int n);
+
+int main(){
+    int M,N;
+    scanf("%d %d",&M, &N);
+    char *board[M+1]; // 비교 대상 배열
+
+    for(int i=0;i<M;i++) {
+        char* tmp = (char*)malloc(sizeof(*tmp)*(N+1));
+        scanf("%s",tmp);
+        board[i] = tmp;
+    }
+
+    int result = compare(board,M,N);
+
+    printf("%d\n",result);
+
+    return 0;
+}
+
+int compare(char *input[],int m, int n){
+
+    int min1, cnt1=0;
+    int min2, cnt2=0;
+
+    char rightboard1[9][9]={ // 정답1
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+    };
+
+    char rightboard2[9][9]={ // 정답2
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+        {'W','B','W','B','W','B','W','B'},
+        {'B','W','B','W','B','W','B','W'},
+    };
+    min1 = 100;
+    min2 = 100;
+    char* board[9];
+    // 가능한 체스판
+    for(int j=0;j<=n-8;j++){
+        for(int t=0;t<=m-8;t++){
+            for(int i=0;i<8;i++){
+                char* substring = input[i+t];
+                char* tmp = (char*)malloc((sizeof(char)*9));
+                substring += j;
+                strncpy(tmp,substring,8);
+                board[i] = tmp;
+                for(int k=0;k<8;k++){
+                    if(*(*(board+i)+k) != rightboard1[i][k]){
+                        cnt1++;
+                    }
+                }
+                free(tmp);
+            }
+            if(cnt1<min1) min1 = cnt1;
+            cnt1=0;
+        }
+    }
+
+    for(int j=0;j<=n-8;j++){
+        for(int t=0;t<=m-8;t++){
+            for(int i=0;i<8;i++){
+                char* substring = input[i+t];
+                char* tmp = (char*)malloc((sizeof(char)*9));
+                substring += j;
+                strncpy(tmp,substring,8);
+                board[i] = tmp;
+                for(int k=0;k<8;k++){
+                    if(*(*(board+i)+k) != rightboard2[i][k]){
+                        cnt2++;
+                    }
+                }
+                free(tmp);
+            }
+            if(cnt2<min2) min2 = cnt2;
+            cnt2=0;
+        }
+    }
+    return min1<min2 ? min1 : min2;
+}
+*/
+
+/* 2798 - 블랙잭
+#include <stdio.h>
+
+int main(){
+    int n,m;
+    scanf("%d %d",&n,&m);
+    int arr[n];
+    int sum = 0;
+    int result = 0;
+    
+    for(int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+
+    int max = arr[0];
+
+    for(int i=0;i<n-2;i++){
+        for(int j=i+1;j<n-1;j++){
+            for(int k=i+2;k<n;k++){
+                if(i !=j && j != k && k != i){
+                sum = arr[i] + arr[j] + arr[k];
+                //printf("%d \n",sum);
+                if(sum <= m && result < sum) result = sum;
+                }
+            }
+        }
+    }
+
+    printf("%d\n",result);
+}
+*/
+
+/* 2750 - 수 정렬하기
+#include <stdio.h>
+
+int data[1000];
+ 
+int main(void){
+    
+    int i, j, temp, num;
+    
+    scanf("%d", &num);
+    
+    for(i=0; i<num; i++){
+        scanf("%d", &data[i]);
+    }
+    
+    // 삽입 정렬
+    for(i=0; i<num-1; i++){
+        j = i;
+        while(j>=0 && data[j] > data[j+1]){
+            temp = data[j];
+            data[j] = data[j+1];
+            data[j+1] = temp;
+            j--;
+        }
+    } 
+ 
+    for(i = 0; i<num; i++){
+        printf("%d\n", data[i]);
+    }
+    
+    return 0;
+}
+*/
+
+/* 1427 -   소트인사이드
+#include <stdio.h>
+#include <stdlib.h>
+
+int static compare (const void* first, const void* second) // 내림 차순
+{
+    if (*(int*)first < *(int*)second) // 정렬 필요 
+        return 1;
+    else if (*(int*)first > *(int*)second) // 정렬 필요 x 내림차순 이니까
+        return -1;
+    else // 같을 때
+        return 0;
+}
+
+int main(){
+    int n;
+    scanf("%d",&n);
+    int array[10] = {0,};
+    int index = 0;
+    while(1){
+        if(n==0) break;
+        array[index++] = n % 10;
+        n /= 10;
+    }
+
+    qsort(array,index, sizeof(int), compare);
+
+    for(int i=0;i<index;i++) printf("%d",array[i]);
+    printf("\n");
+
+    return 0;
+}
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int static compare (const void* first, const void* second) // 오름 차순
+{
+    if (*(int*)first > *(int*)second) // 정렬 필요 
+        return 1;
+    else if (*(int*)first < *(int*)second) // 정렬 필요 x
+        return -1;
+    else // 같을 때
+        return 0;
+}
+int main(){
+    int n;
+    scanf("%d",&n);
+    int arr[n];
+    int sum = 0;
+    int avg = 0;
+    int min = 4001;
+    int max = 0;
+    int range = 0;
+    int count[4001] = {0,};
+    int count_max = 0;
+    int count_max_index;
+    int middle;
+    int cnt = 0;
+
+    for(int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+
+    for(int i=0;i<n;i++){
+        if(min > arr[i]) min = arr[i]; // 최댓값
+        if(max < arr[i]) max = arr[i]; // 최솟값
+        count[arr[i]]++; // 빈도수 배열
+        sum += arr[i]; // 누적 합
+    }
+
+    avg = sum / n; // 산술 평균
+    middle = (n/2)+1; // 중앙값 위치
+    // 최빈값 인데 최빈값이 여러 개면 두 번째로 작은 값 출력
+    range = max - min; // 범위
+
+    // 최대값 제거하면 그 다음 최댓값이 최대가 될 것이다.
+    qsort(arr,n, sizeof(int), compare);
+
+    for(int i=0;i<4001;i++){
+        if(count_max<count[i]){
+            i=count_max_index;
+            count_max = count[i];
+        }
+    }
+    if(cnt>=1){ // 최빈값이 여러개 일때 핸들러
+        
+    }
+    printf("%d\n%d\n%d\n%d\n",avg,arr[middle],count_max,range);
+}
